@@ -150,7 +150,7 @@
 	 * この処理が終わり次第、crossaudioreadyイベントをdocumentでトリガーする。
 	 * AudioオブジェクトとFlashの両方が使用できない場合、crossaudioreadyイベントの直前にcannotplayaudioイベントをdocumentでトリガーする。
 	 */
-	$(document).ready(function() {
+	var _init = function() {
 		
 		//Audio対応かどうかのチェック
 		var canUseAudio = false;
@@ -359,7 +359,7 @@
 		
 		
 		jQuery.extend({
-			crossAudio: { 
+			crossAudio: {
 				/**
 				 * Flashから呼ばれるプライベート関数
 				 * @private
@@ -411,8 +411,18 @@
 				canPlayMp3: canPlayMp3,
 				
 				/** デフォルトの音量 */
-				defaultVolume: defaultVolume
+				defaultVolume: defaultVolume,
+				
+				init: $.noop
 			}
 		});
-	});
+	};
+	
+	$(document).ready(function() {
+		$.extend({
+			crossAudio: {
+				init: _init
+			}
+		});
+	})
 }(jQuery));
