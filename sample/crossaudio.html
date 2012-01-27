@@ -13,31 +13,44 @@ $(document).ready(function() {
 		flashPath: '../src'
 	});
 	
+	
+	var audioNames = ['Thunder_5.69', 'Thunder_4.99', 'Thunder_3.34'];
+	$.each(audioNames, function(i, o) {
+		$('<label/>').append($('<input type="radio" name="audio-file" />').attr({
+			value: o,
+			checked: i == 0
+		})).append(o).appendTo($('#sample-files'));
+	});
+	
+	var getAudioName = function() {
+		return $('input[name=audio-file]:radio:checked').val();
+	};
+	
 	$('#export').click(function() {
-		$(this).loadAudio('Thunder_5.69');
+		$(this).loadAudio(getAudioName());
 	});
 	$('#export').dblclick(function() {
 		var i=0;
 		while(i++ < 3)
-		$(this).playAudio('Thunder_5.69');
+		$(this).playAudio(getAudioName());
 	});
 	var evenDebuger = function(e) {
 		$('#debug')[0].value += e.type + " is called.\n";
 	};
 	$('button').not('.vol').click(function() {
-		$('#export')[$(this).attr('id') + 'Audio']('Thunder_5.69', evenDebuger);
+		$('#export')[$(this).attr('id') + 'Audio'](getAudioName(), evenDebuger);
 	});
 	$('button#muteon').click(function() {
-		$('#export').muteAudio('Thunder_5.69', true);
+		$('#export').muteAudio(getAudioName(), true);
 	});
 	$('button#muteoff').click(function() {
-		$('#export').muteAudio('Thunder_5.69', false);
+		$('#export').muteAudio(getAudioName(), false);
 	});
 	$('button#volPuls').click(function() {
-		$('#export').audioVolume('Thunder_5.69', $('#export').audioVolume('Thunder_5.69') + 0.1);
+		$('#export').audioVolume(getAudioName(), $('#export').audioVolume(getAudioName()) + 0.1);
 	});
 	$('button#volMinus').click(function() {
-		$('#export').audioVolume('Thunder_5.69', $('#export').audioVolume('Thunder_5.69') - 0.1);
+		$('#export').audioVolume(getAudioName(), $('#export').audioVolume(getAudioName()) - 0.1);
 	});
 	
 });
@@ -69,6 +82,9 @@ $(document).ready(function() {
 </dl>
 
 <h3>サンプル</h3>
+
+<div id="sample-files">
+</div>
 
 <p><button id="load">load</button><button id="play">play</button><button id="loop">loop</button>
 <button id="stop">stop</button><button id="pause">pause</button><button id="resume">resume</button><br>
