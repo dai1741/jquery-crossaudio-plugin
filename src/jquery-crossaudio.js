@@ -12,7 +12,13 @@
  */
 
 (function($) {
-	var defaultVolume = 0.8;
+
+	var defaultOptions = {
+		defaultVolume: 0.8,
+		flashPath: '.'
+	};
+	var options;
+	
 	var crossAudioCenter;
 	
 	var CrossAudio;
@@ -150,7 +156,9 @@
 	 * この処理が終わり次第、crossaudioreadyイベントをdocumentでトリガーする。
 	 * AudioオブジェクトとFlashの両方が使用できない場合、crossaudioreadyイベントの直前にcannotplayaudioイベントをdocumentでトリガーする。
 	 */
-	var _init = function() {
+	var _init = function(_options) {
+		
+		options = $.extend(defaultOptions, _options);
 		
 		//Audio対応かどうかのチェック
 		var canUseAudio = false;
@@ -210,7 +218,7 @@
 				var self = document.createElement('div'); //addEventListerできるようにするためHTMLElementだと言い張る
 				self.instance = new Audio(src);
 				self.instance.preload = 'auto';
-				self.instance.volume = defaultVolume;
+				self.instance.volume = options.defaultVolume;
 				
 				self.used = false;
 				//self.audioSrc = src;
@@ -317,7 +325,7 @@
 							+ '</object>';
 				}
 				else {
-					$('body').append('<embed id="crossAudio-center" name="crossAudio-center" src="' + swfName + '" '
+					$('body').append('<embed id="crossAudio-center" name="crossAudio-center" src="' + options.flashPath + '/' + swfName + '" '
 							+ 'allowScriptAccess="always" width="1" height="1" type="application/x-shockwave-flash" '
 							+ 'pluginspage="http://www.macromedia.com/go/getflashplayer" />');
 				}
@@ -411,7 +419,7 @@
 				canPlayMp3: canPlayMp3,
 				
 				/** デフォルトの音量 */
-				defaultVolume: defaultVolume,
+				defaultVolume: options.defaultVolume,
 				
 				init: $.noop
 			}
