@@ -7,7 +7,7 @@
  *  - http://www.opensource.org/licenses/mit-license.php
  * 
  * @author dai1741
- * @version 1.0, Sep 10 2010
+ * @version 1.0
  * @see http://
  */
 
