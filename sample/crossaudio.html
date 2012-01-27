@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <title>CrossAudio</title>
 
-<script src="../lib/jquery.js"></script>
-<script src="jquery-crossaudio.js"></script>
-<script src="jquery-simplesoundmixer.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<script src="../src/jquery-crossaudio.js"></script>
+<script src="../src/jquery-simplesoundmixer.js"></script>
 <script>
 $(document).ready(function() {
 	
@@ -52,7 +52,20 @@ $(document).ready(function() {
 <body>
 
 <article class="content">
-<h2>CrossAudio</h2>
+<h2>jQuery CrossAudio Plugin</h2>
+
+<p>HTML5とFlashを使って音を鳴らすためのjQueryプラグイン。<br/>
+次の2つのコードからなる。</p>
+
+<dl>
+	<dt>jquery-crossaudio.js</dt>
+	<dd>HTML5とFlashの違いを吸収するためのラッパープラグイン。</dd>
+	<dt>jquery-simplesoundmixer.js</dt>
+	<dd>jquery-crossaudio.jsを使用し、効果音の再生を簡単に行うためのプラグイン。
+	ブラウザ毎のファイル対応の違いをある程度吸収する。</dd>
+</dl>
+
+<h3>サンプル</h3>
 
 <p><button id="load">load</button><button id="play">play</button><button id="loop">loop</button>
 <button id="stop">stop</button><button id="pause">pause</button><button id="resume">resume</button><br>
@@ -60,7 +73,7 @@ $(document).ready(function() {
 <button id="volPuls" class="vol">volPuls</button><button id="volMinus" class="vol">volMinus</button><br>
 <textarea id="debug" rows="60" cols="80"></textarea></p>
 
-<p id="export">CrossAudio</p>
+<p id="export"></p>
 
 </article>
 
