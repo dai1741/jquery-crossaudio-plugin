@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>CrossAudio</title>
+<title>jQuery CrossAudio Plugin</title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 <script src="../src/jquery-crossaudio.js"></script>
@@ -26,19 +26,12 @@ $(document).ready(function() {
 		return $('input[name=audio-file]:radio:checked').val();
 	};
 	
-	$('#export').click(function() {
-		$(this).loadAudio(getAudioName());
-	});
-	$('#export').dblclick(function() {
-		var i=0;
-		while(i++ < 3)
-		$(this).playAudio(getAudioName());
-	});
-	var evenDebuger = function(e) {
+	var eventDebugger = function(e) {
 		$('#debug')[0].value += e.type + " is called.\n";
 	};
+	
 	$('button').not('.vol').click(function() {
-		$('#export')[$(this).attr('id') + 'Audio'](getAudioName(), evenDebuger);
+		$('#export')[$(this).attr('id') + 'Audio'](getAudioName(), eventDebugger);
 	});
 	$('button#muteon').click(function() {
 		$('#export').muteAudio(getAudioName(), true);
@@ -83,13 +76,17 @@ $(document).ready(function() {
 
 <h3>サンプル</h3>
 
+
 <div id="sample-files">
+音声ファイル：
 </div>
 
 <p><button id="load">load</button><button id="play">play</button><button id="loop">loop</button>
 <button id="stop">stop</button><button id="pause">pause</button><button id="resume">resume</button><br>
 <button id="muteon" class="vol">muteon</button><button id="muteoff" class="vol">muteoff</button>
-<button id="volPuls" class="vol">volPuls</button><button id="volMinus" class="vol">volMinus</button><br>
+<button id="volPuls" class="vol">volPuls</button><button id="volMinus" class="vol">volMinus</button></p>
+
+<p>イベント出力<br>
 <textarea id="debug" rows="60" cols="80"></textarea></p>
 
 <p id="export"></p>
