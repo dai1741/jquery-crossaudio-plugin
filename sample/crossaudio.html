@@ -9,7 +9,9 @@
 <script src="../src/jquery-simplesoundmixer.js"></script>
 <script>
 $(document).ready(function() {
-	$.crossAudio.init();
+	$.crossAudio.init({
+		flashPath: '../src'
+	});
 	
 	$('#export').click(function() {
 		$(this).loadAudio('Thunder_5.69');

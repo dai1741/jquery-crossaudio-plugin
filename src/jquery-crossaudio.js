@@ -313,7 +313,8 @@
 				return crossAudioCenter.dispose(this.audioId);
 			};
 			
-			var swfName = 'FlashAudio.swf?' + new Date().getTime(); //コンストラクタを確実に呼ぶためタイムスタンプを残す
+			var swfName = options.flashPath + '/' + 'FlashAudio.swf?' + new Date().getTime();
+			//コンストラクタを確実に呼ぶためタイムスタンプを残す
 			
 			if($('#crossAudio-center').length == 0) {
 				if($.browser.msie) {
@@ -325,7 +326,7 @@
 							+ '</object>';
 				}
 				else {
-					$('body').append('<embed id="crossAudio-center" name="crossAudio-center" src="' + options.flashPath + '/' + swfName + '" '
+					$('body').append('<embed id="crossAudio-center" name="crossAudio-center" src="' + swfName + '" '
 							+ 'allowScriptAccess="always" width="1" height="1" type="application/x-shockwave-flash" '
 							+ 'pluginspage="http://www.macromedia.com/go/getflashplayer" />');
 				}
