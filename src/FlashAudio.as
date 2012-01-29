@@ -281,7 +281,7 @@ class Audio {
 	 * @return the duration of the audio in seconds.
 	 */
 	public function duration():Number {
-		return this.sound.length * 1000; //to seconds
+		return this.sound.length / 1000; //to seconds
 	}
 	
 	

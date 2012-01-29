@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>jQuery CrossAudio Plugin</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<script src="../src/jquery-crossaudio.js"></script>
+<script src="../src/jquery-simplesoundmixer.js"></script>
+<script>
+$(document).ready(function() {
+	$.crossAudio.init({
+		flashPath: '../src'
+	});
+	
+	
+	var audioNames = ['Thunder_5.69', 'Thunder_4.99', 'Thunder_3.34'];
+	$.each(audioNames, function(i, o) {
+		$('<label/>').append($('<input type="radio" name="audio-file" />').attr({
+			value: o,
+			checked: i == 0
+		})).append(o).appendTo($('#sample-files'));
+	});
+	
+	var getAudioName = function() {
+		return $('input[name=audio-file]:radio:checked').val();
+	};
+	
+	var eventDebugger = function(e) {
+		$('#debug')[0].value += e.type + " is called.\n";
+	};
+	
+	$('button').not('.vol').click(function() {
+		$('#export')[$(this).attr('id') + 'Audio'](getAudioName(), eventDebugger);
+	});
+	$('button#muteon').click(function() {
+		$('#export').muteAudio(getAudioName(), true);
+	});
+	$('button#muteoff').click(function() {
+		$('#export').muteAudio(getAudioName(), false);
+	});
+	$('button#volPuls').click(function() {
+		$('#export').audioVolume(getAudioName(), $('#export').audioVolume(getAudioName()) + 0.1);
+	});
+	$('button#volMinus').click(function() {
+		$('#export').audioVolume(getAudioName(), $('#export').audioVolume(getAudioName()) - 0.1);
+	});
+	
+});
+	$(document).bind('crossaudioready', function() {
+		$('#export').click();
+	});
+	$(document).bind('cannotplayaudio', function() {
+		$('#export').html("Audio not supported!!!!!");
+	});
+
+
+</script>
+</head>
+
+<body>
+
+<article class="content">
+<h2>jQuery CrossAudio Plugin</h2>
+
+<p>HTML5とFlashを使って音を鳴らすためのjQueryプラグイン。<br/>
+次の2つのコードからなる。</p>
+
+<dl>
+	<dt>jquery-crossaudio.js</dt>
+	<dd>HTML5とFlashの違いを吸収するためのラッパープラグイン。</dd>
+	<dt>jquery-simplesoundmixer.js</dt>
+	<dd>jquery-crossaudio.jsを使用し、効果音の再生を簡単に行うためのプラグイン。
+	ブラウザ毎のファイル対応の違いをある程度吸収する。</dd>
+</dl>
+
+<h3>サンプル</h3>
+
+
+<div id="sample-files">
+音声ファイル：
+</div>
+
+<p><button id="load">load</button><button id="play">play</button><button id="loop">loop</button>
+<button id="stop">stop</button><button id="pause">pause</button><button id="resume">resume</button><br>
+<button id="muteon" class="vol">muteon</button><button id="muteoff" class="vol">muteoff</button>
+<button id="volPuls" class="vol">volPuls</button><button id="volMinus" class="vol">volMinus</button></p>
+
+<p>イベント出力<br>
+<textarea id="debug" rows="60" cols="80"></textarea></p>
+
+<p id="export"></p>
+
+</article>
+
+
+<footer>
+</footer>
+
+</body>
+</html>

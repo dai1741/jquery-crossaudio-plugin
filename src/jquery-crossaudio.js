@@ -7,12 +7,18 @@
  *  - http://www.opensource.org/licenses/mit-license.php
  * 
  * @author dai1741
- * @version 1.0, Sep 10 2010
+ * @version 1.0
  * @see http://
  */
 
 (function($) {
-	var defaultVolume = 0.8;
+
+	var defaultOptions = {
+		defaultVolume: 0.8,
+		flashPath: '.'
+	};
+	var options;
+	
 	var crossAudioCenter;
 	
 	var CrossAudio;
@@ -150,7 +156,9 @@
 	 * この処理が終わり次第、crossaudioreadyイベントをdocumentでトリガーする。
 	 * AudioオブジェクトとFlashの両方が使用できない場合、crossaudioreadyイベントの直前にcannotplayaudioイベントをdocumentでトリガーする。
 	 */
-	$(document).ready(function() {
+	var _init = function(_options) {
+		
+		options = $.extend(defaultOptions, _options);
 		
 		//Audio対応かどうかのチェック
 		var canUseAudio = false;
@@ -210,7 +218,7 @@
 				var self = document.createElement('div'); //addEventListerできるようにするためHTMLElementだと言い張る
 				self.instance = new Audio(src);
 				self.instance.preload = 'auto';
-				self.instance.volume = defaultVolume;
+				self.instance.volume = options.defaultVolume;
 				
 				self.used = false;
 				//self.audioSrc = src;
@@ -305,7 +313,8 @@
 				return crossAudioCenter.dispose(this.audioId);
 			};
 			
-			var swfName = 'FlashAudio.swf?' + new Date().getTime(); //コンストラクタを確実に呼ぶためタイムスタンプを残す
+			var swfName = options.flashPath + '/' + 'FlashAudio.swf?' + new Date().getTime();
+			//コンストラクタを確実に呼ぶためタイムスタンプを残す
 			
 			if($('#crossAudio-center').length == 0) {
 				if($.browser.msie) {
@@ -359,7 +368,7 @@
 		
 		
 		jQuery.extend({
-			crossAudio: { 
+			crossAudio: {
 				/**
 				 * Flashから呼ばれるプライベート関数
 				 * @private
@@ -411,8 +420,18 @@
 				canPlayMp3: canPlayMp3,
 				
 				/** デフォルトの音量 */
-				defaultVolume: defaultVolume
+				defaultVolume: options.defaultVolume,
+				
+				init: $.noop
 			}
 		});
-	});
+	};
+	
+	$(document).ready(function() {
+		$.extend({
+			crossAudio: {
+				init: _init
+			}
+		});
+	})
 }(jQuery));
